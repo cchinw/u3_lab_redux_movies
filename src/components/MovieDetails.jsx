@@ -1,39 +1,39 @@
-import { useEffect } from "react"
-import { connect } from "react-redux"
-import { useParams } from "react-router-dom"
-import { LoadMovieDetails } from "../store/actions/MovieActions"
+import React, { useEffect } from 'react'
+import { LoadMovieDetails } from '../store/actions/MovieActions'
+import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
+const mapStatetoProps = ({ movieDetailsState }) => {
+    return { movieDetailsState }
+}
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchMovies: (id) => dispatch(LoadMovieDetails(id))
-  }
+    return {
+        fetchMovieDetails : (id) => dispatch(LoadMovieDetails(id))
+    }
 }
-
-const mapStateToProps = ({movieDetailsState}) => {
-  return {movieDetailsState}
-}
-
-
 
 const MovieDetails = (props) => {
-  console.log(props, 'DETAILSSSS')
-  let {id} = useParams()
+    let { id } = useParams()
+    console.log(props, "MOVIE DETAILS PROPS FINAL")
+    useEffect(() => {
+        props.fetchMovieDetails(id)
+    }, [id])
 
-  useEffect((props) => {
-    props.fetchMoviesDetails(id)
-  }, [id])
-
-  return (
+    return (
     <div className="movie-details-container">
+      <img className='movie-image' src={`https://image.tmdb.org/t/p/w500${props.movieDetailsState.movieDetails.poster_path}`} alt={props.movieDetailsState.movieDetails.title} />
        <p>{ props.movieDetailsState.movieDetails.title }</p>
        <p>Release Date: {props.movieDetailsState.movieDetails.release_date }</p>
        <p>Runtime: {props.movieDetailsState.movieDetails.runtime} minutes</p>
        <p>Budget: $ {props.movieDetailsState.movieDetails.budget}</p>
        <p>Revenue: $ {props.movieDetailsState.movieDetails.revenue}</p>
        <p>Average Rating: {props.movieDetailsState.movieDetails.vote_average}/10</p>
-       <p>{props.movieDetailsState.movieDetails.overview}</p>
+       <p>Overview: {props.movieDetailsState.movieDetails.overview}</p>
     </div>
-)
+    )
+
+
 }
-export default connect(mapStateToProps, mapDispatchToProps) (MovieDetails)
+
+export default connect(mapStatetoProps, mapDispatchToProps)(MovieDetails)

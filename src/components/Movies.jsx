@@ -15,8 +15,6 @@ const mapStateToProps = ({movieState}) => {
 
 const Movies = (props) => {
 
-  console.log(props.movieState.movies, 'MOVIE LIST') 
-
   useEffect(() => {
     props.fetchMovies()
   }, [])
@@ -25,13 +23,13 @@ const Movies = (props) => {
         {
             props.movieState.movies.map((movie) => (
                 <div key={movie.id} className="movie-profile">
-                <img className="movie-image" src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`} alt="poster" />
+                <img className="movie-image" src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`} alt="poster" />
                 <h3>{movie.title}</h3>
-                <Link to={`/movies/${movie.id}`}>View Movie</Link>
+                <Link to={`/movie/${movie.id}`}>View Movie</Link>
                 </div>
             ))
         }
     </div>
 )
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Movies)
+export default connect(mapStateToProps,mapDispatchToProps)(Movies)

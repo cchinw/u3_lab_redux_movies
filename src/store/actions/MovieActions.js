@@ -19,10 +19,10 @@ export const LoadMovies = () => {
 export const LoadMovieDetails = (id) => {
   return async (dispatch) => {
     try {
-      const details = await GetMovieDetails(id)
+      const movieDetail = await GetMovieDetails(id)
       dispatch({
         type: GET_MOVIE_DETAILS,
-        payload: details
+        payload: movieDetail
       })
     } catch (error) {
       throw error
