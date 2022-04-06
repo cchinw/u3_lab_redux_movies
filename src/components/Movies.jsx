@@ -21,16 +21,17 @@ const Movies = (props) => {
     props.fetchMovies()
   }, [])
   return (
-    <ul>
-      {props.movieState.movies.map((movie) => (
-        <div>
-          <Link to={`movie`} key={movie.id}>{movie.title}</Link>
-          <img src={movie.backdrop_path}/>
-          <p>{movie.overview}</p>
-          <p>Rating: {movie.vote_average}</p>
-        </div>
-      ))}
-    </ul>
-  )
+    <div className="list-container">
+        {
+            props.movieState.movies.map((movie) => (
+                <div key={movie.id} className="movie-profile">
+                <img className="movie-image" src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`} alt="poster" />
+                <h3>{movie.title}</h3>
+                <Link to={`/movies/${movie.id}`}>View Movie</Link>
+                </div>
+            ))
+        }
+    </div>
+)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Movies)

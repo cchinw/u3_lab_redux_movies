@@ -2,12 +2,11 @@ import { useEffect } from "react"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 import { LoadMovieDetails } from "../store/actions/MovieActions"
-import { Link } from "react-router-dom"
 
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchMovies: (id) => dispatch(LoadMovieDetails())
+    fetchMovies: (id) => dispatch(LoadMovieDetails(id))
   }
 }
 
@@ -21,20 +20,20 @@ const MovieDetails = (props) => {
   console.log(props, 'DETAILSSSS')
   let {id} = useParams()
 
-  useEffect(() => {
-    props.fetchMovies(id)
+  useEffect((props) => {
+    props.fetchMoviesDetails(id)
   }, [id])
 
   return (
-    <div>
-      {props.movieDetailsState.movies.map((detail) => (
-        <div>
-        <Link to={`movie/${detail.id}`} key={detail.id}>{detail.title}</Link>
-        <img src={detail.poster_path} alt="poster"/>
-      </div>
-      ))}
+    <div className="movie-details-container">
+       <p>{ props.movieDetailsState.movieDetails.title }</p>
+       <p>Release Date: {props.movieDetailsState.movieDetails.release_date }</p>
+       <p>Runtime: {props.movieDetailsState.movieDetails.runtime} minutes</p>
+       <p>Budget: $ {props.movieDetailsState.movieDetails.budget}</p>
+       <p>Revenue: $ {props.movieDetailsState.movieDetails.revenue}</p>
+       <p>Average Rating: {props.movieDetailsState.movieDetails.vote_average}/10</p>
+       <p>{props.movieDetailsState.movieDetails.overview}</p>
     </div>
-  )
+)
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieDetails)
+export default connect(mapStateToProps, mapDispatchToProps) (MovieDetails)
